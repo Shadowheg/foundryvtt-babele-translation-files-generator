@@ -1,0 +1,26 @@
+{
+  "pf2e": 
+    {
+		"name": "Name",
+		"tokenName": "prototypeToken.name",
+        "description": "system.details.publicNotes",
+        "img": "img",
+        "tokenImg": "prototypeToken.texture.src",
+        "tokenvision": "prototypeToken.vision",
+        "tokendisplayBars": "prototypeToken.displayBars",
+        "tokendisplayName": "prototypeToken.displayName",
+        "randomImg": "prototypeToken.randomImg",
+        "hstealth": "system.attributes.stealth.details",
+        "hdisable": "system.details.disable",
+        "hdescription": "system.details.description",
+        "hreset": "system.details.reset",
+        "hroutine": "system.details.routine",
+        "prependAdjective": "prototypeToken.prependAdjective",
+        "appendNumber": "prototypeToken.appendNumber",
+        "actorLink": "prototypeToken.actorLink"
+    },
+  "dnd5e":
+  {
+    "name": ""
+  }
+}

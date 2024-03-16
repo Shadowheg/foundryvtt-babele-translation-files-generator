@@ -16,3 +16,5 @@ assets/
 !.yarn/sdks
 !.yarn/versions
 ###< yarn ###
+translation_files.mjs
+.gitignore
