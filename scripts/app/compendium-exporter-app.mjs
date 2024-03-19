@@ -103,52 +103,16 @@ export class CompendiumExporterApp extends FormApplication {
     const gameSystem = game.system.id.toLowerCase();
     const customMappings = mappings[gameSystem];
     if (!customMappings) {
-      console.log('No custom mappings found for the current game system:', gameSystem);
+      console.error(`No custom mappings found for the current game system: ${gameSystem}`);
+      ui.notifications.error(`No custom mappings found for the current game system: ${gameSystem}`);
       return;
     }
   
-    for (const [key, value] of Object.entries(customMappings)) {
-      this._parseAndSetMapping(key, value);
-    }
-  }
+    // Прямое применение маппингов без разделения по типам
+    this.options.customMapping = {...this.options.customMapping, ...customMappings};
   
-  _parseAndSetMapping(key, path) {
-    this.options = this.options || {};
-    this.options.customMapping = this.options.customMapping || {};
-  
-    console.log(`Applying mapping for ${key}: ${path}`);
-    this.options.customMapping[key] = path;
-  }
-  
-  _navigateAndApply(data, pathParts, key) {
-    // Recursively navigate through the data based on the pathParts.
-    let currentData = data;
-    for (let i = 0; i < pathParts.length; i++) {
-      let part = pathParts[i];
-      if (part === '*') { // Handle dynamic array paths
-        if (Array.isArray(currentData)) {
-          for (let item of currentData) {
-            this._navigateAndApply(item, pathParts.slice(i + 1), key); // Recurse for each item
-          }
-          return; // Exit after processing the array
-        } else {
-          console.warn("Dynamic path expected an array but got:", currentData);
-          return;
-        }
-      } else if (currentData[part] !== undefined) { // Regular path
-        currentData = currentData[part];
-      } else { // Path not found
-        console.warn(`Path not found: ${part}`);
-        return;
-      }
-    }
-    // Apply the mapping to the currentData
-    if (currentData !== undefined) {
-      console.log(`Applying mapping for ${key}:`, currentData);
-      // Here you would apply the mapping as needed, potentially modifying the output structure.
-    } else {
-      console.warn(`Data not found for key: ${key}`);
-    }
+    console.log('Custom mappings have been successfully applied:', this.options.customMapping);
+    // После применения маппингов может потребоваться перерендерить UI или выполнить другие действия
   }
   
   

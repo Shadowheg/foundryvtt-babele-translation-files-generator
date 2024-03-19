@@ -59,21 +59,21 @@
     {{/if}}
     <p class="notes">{{localize "BTFG.CompendiumExporter.UseExistingFileHint"}}</p>
   </div>
-    <div class="form-group">
-      <label for="systemPresetMapping">{{localize "BTFG.CompendiumExporter.SystemPresetMapping"}}</label>
-      <input type="file" id="systemPresetMapping" name="systemPresetMapping" accept=".json" />
-      {{#if selectedFileName}}
-        <div class="form-group">
-          <p>{{localize "BTFG.CompendiumExporter.SystemPresetFile"}} <strong>{{selectedFileName}}</strong></p>
-          <p>
-            <button type="button" data-unselect-file>
-              <i class="fa fa-trash"></i> {{localize "BTFG.CompendiumExporter.SystemUnselectExistingFile"}}
-            </button>
-          </p>
-        </div>
-      {{/if}}
-      <p class="notes">{{localize "BTFG.CompendiumExporter.SystemPresetMappingHint"}}</p>
-    </div>
+  <div class="form-group">
+    <label for="systemPresetMapping">{{localize "BTFG.CompendiumExporter.SystemPresetMapping"}}</label>
+    <input type="file" id="systemPresetMapping" name="systemPresetMapping" accept=".json" />
+    {{#if selectedPresetFileName}}
+      <div class="form-group">
+        <p>{{localize "BTFG.CompendiumExporter.SystemPresetFile"}} <strong>{{selectedPresetFileName}}</strong></p>
+        <p>
+          <button type="button" data-unselect-preset-file>
+            <i class="fa fa-trash"></i> {{localize "BTFG.CompendiumExporter.SystemUnselectExistingFile"}}
+          </button>
+        </p>
+      </div>
+    {{/if}}
+    <p class="notes">{{localize "BTFG.CompendiumExporter.SystemPresetMappingHint"}}</p>
+  </div>
   <div class="form-group">
     <label for="sortEntries">{{localize "BTFG.CompendiumExporter.SortEntriesAlpha"}}</label>
     <input type="checkbox" value="1" id="sortEntries" name="sortEntries" {{checked object.sortEntries}} />
