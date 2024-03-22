@@ -88,33 +88,34 @@ export class CompendiumExporterApp extends FormApplication {
       reader.onload = async (e) => {
         const content = e.target.result;
         try {
-          const mappings = JSON.parse(content);
-          this._applyCustomMappings(mappings);
+          const loadedMappings = JSON.parse(content);
+          const systemId = game.system.id.toLowerCase();
+          const systemMapping = loadedMappings[systemId];
+
+          if (systemMapping) {
+            // Ensure `this.object.customMapping` is initialized correctly
+            if (!this.object.customMapping) {
+              this.object.customMapping = { actor: {}, item: {} };
+            }
+            
+            // Update customMapping for both actor and item types by duplicating mappings
+            for (const [key, value] of Object.entries(systemMapping)) {
+              this.object.customMapping.actor[key] = value;
+              this.object.customMapping.item[key] = value;
+            }
+  
+            ui.notifications.info("Custom mappings have been successfully loaded and applied.");
+          } else {
+            ui.notifications.error(`No mappings found for the system: ${systemId}.`);
+          }
         } catch (error) {
-          console.error('Error parsing JSON mappings:', error);
-          ui.notifications.error('Failed to parse JSON mappings.');
+          console.error("Error parsing mappings file: ", error);
+          ui.notifications.error("Error loading custom mappings. Please check the console for more details.");
         }
       };
       reader.readAsText(file);
     }
   }
-  
-  _applyCustomMappings(mappings) {
-    const gameSystem = game.system.id.toLowerCase();
-    const customMappings = mappings[gameSystem];
-    if (!customMappings) {
-      console.error(`No custom mappings found for the current game system: ${gameSystem}`);
-      ui.notifications.error(`No custom mappings found for the current game system: ${gameSystem}`);
-      return;
-    }
-  
-    // Прямое применение маппингов без разделения по типам
-    this.options.customMapping = {...this.options.customMapping, ...customMappings};
-  
-    console.log('Custom mappings have been successfully applied:', this.options.customMapping);
-    // После применения маппингов может потребоваться перерендерить UI или выполнить другие действия
-  }
-  
   
   async _onSubmit(event, { updateData = null, preventClose = false, preventRender = false } = {}) {
     if (event.currentTarget?.files && event.currentTarget.files[0]) {
